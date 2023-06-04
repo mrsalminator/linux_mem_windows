@@ -1,0 +1,85 @@
+Что бы выбрать руками закрытый ключ для подключения вбиваем:
+ssh -i C:\Users\Juli\.ssh\Juli_windows_new dev@192.168.31.58
+=================================================================
+
+Проверка прав и настройки ssh в целом:
+
+=================================================================
+
+
+Сначала проверьте свой домашний каталог (СТОРОНА СЕРВЕРА)
+
+[vini@random ~]$ ls -ld ~
+
+drwx------. 3 vini vini 127 Nov 23 15:29 /home/vini
+если это не так, беги
+
+chmod 0700 /home/your_home
+Теперь проверьте папку .ssh
+
+[vini@random ~]$ ls -ld  /home/vini/.ssh/
+
+drwx------. 2 vini vini 29 Nov 23 15:28 /home/vini/.ssh/
+если это не так, запустите
+
+chmod 0700 /home/your_home/.ssh
+теперь убедитесь, что authorized_keysэто выглядит так
+
+[vini@venon ~]$ ls -ld  /home/vini/.ssh/authorized_keys 
+
+-rw-------. 1 vini vini 393 Nov 23 15:28 /home/vini/.ssh/authorized_keys
+или просто беги
+
+chmod 0600 /home/your_home/.ssh/authorized_keys
+После этого перейдите к/etc/ssh/sshd_config
+
+Для лучшего набора безопасности
+
+PermitRootLogin no
+
+PubkeyAuthentication yes
+оставить как yesдля тестирования
+
+PasswordAuthentication yes
+Убедись в том, что
+
+ChallengeResponseAuthentication no
+Прокомментируйте эти строки для GSSAPI
+
+# #GSSAPIAuthentication yes
+# #GSSAPICleanupCredentials no
+Убедитесь, что установлено значениеUsePAM yes
+
+UsePAM yes
+теперь перезапустите службу sshd
+
+systemctl restart sshd 
+на стороне клиента
+
+cd /home/your_home/.ssh
+генерировать новые ключи; установка пароля необязательна, но это хорошая идея
+
+ssh-keygen -t rsa -b 2048  
+скопируйте ключ паба на свой сервер
+
+ssh-copy-id -i id_rsa.pub user_name@server_ip 
+
+start ssh agent 
+
+eval $(ssh-agent)
+
+ssh-add /home/user/.ssh/your_private_key
+теперь вы готовы идти!
+
+ssh user_name@server_ip
+если все работает нормально
+
+сделайте резервную копию своего закрытого ключа, а затем отклонитеPasswordAuthentication
+
+PasswordAuthentication no 
+Перезапустите свой сервер
+
+теперь любой, кто попытается подключиться к вашему серверу по ssh без ваших ключей, должен получить
+
+vini@random: Permission denied (publickey).
+держите детей сценариев подальше от вашего бизнеса, и удачи
