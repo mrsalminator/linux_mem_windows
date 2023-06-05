@@ -1,3 +1,7 @@
+https://winitpro.ru/index.php/2020/01/22/vstroennyj-ssh-klient-windows/
+
+================================================================
+
 На винде, что бы каждый раз не прописывать путь до закрытого ключа ssh, сделай так:
 set-service ssh-agent -StartupType 'Automatic' - врубает службу при старте системы
 
