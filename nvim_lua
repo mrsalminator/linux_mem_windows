@@ -1,0 +1,4 @@
+1) sudo npm install -g pyright - поставить сервер (NPM это пакетный менеджер Node js, т.е Node Package Manager, тебе над поставить ноду и будет нпм. А с нмп поставить пакет глобально это npm install -g somePackage)
+
+2) https://www.youtube.com/watch?v=4PzSNN45tcA&list=PLbgfDQt2OT1p6U25qnrS9EvpUJkEVOpqi&index=9&t=1263s
+
