@@ -1,0 +1,8 @@
+Дробное масштабирование (Fractional scaling)
+
+=================================================
+включить этот режим можно с помощью команды:
+
+1) gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+=================================================
